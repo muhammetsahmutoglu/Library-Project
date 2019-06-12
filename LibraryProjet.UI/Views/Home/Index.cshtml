@@ -1,0 +1,55 @@
+﻿@model LibraryProjet.UI.Models.VM.BookVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h3>
+    @if (Model.user == null)
+       {
+           <a class="dropdown-toggle" data-toggle="dropdown">
+               <span class="hidden-xs"> Hello User. You can see more books if you register</span>
+           </a>
+           <a href="/Account/Register" class="btn btn-success">Register</a>
+           <a class="dropdown-toggle" data-toggle="dropdown">
+               <span class="hidden-xs">Already Have Account?</span>
+           </a>
+           <a href="/Account/Login" class="btn btn-success">Login</a>
+
+       }
+    else if (Model.user.Role==LibraryProject.DAL.ORM.Enum.Role.Admin)
+    {
+    <a class="dropdown-toggle" data-toggle="dropdown">
+        <span class="hidden-xs"> Hello Admin @Model.user.UserName !</span>
+    </a><a class="btn-success" href="/Appuser/Add">Click to go to admin area</a>
+    }
+    else if (Model.user.Role == LibraryProject.DAL.ORM.Enum.Role.Customer)
+    {
+    <a class="dropdown-toggle" data-toggle="dropdown">
+        <span class="hidden-xs"> Hello @Model.user.UserName!</span>
+    </a>
+    }
+
+
+
+</h3>
+
+<table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+    <thead>
+        <tr role="row">
+            <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 217.8px;">Author Name</th>
+            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 266.6px;">Book Name</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Books)
+        {
+            <tr>
+                <td><a asp-controller="" asp-action="">@item.AuthorFullName</a></td>
+                <td><a asp-controller="" asp-action="">@item.Name</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
